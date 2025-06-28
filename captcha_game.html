@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Verifica di non essere un robot</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(6, 100px);
+    grid-gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  .grid img {
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    border: 3px solid transparent;
+  }
+  .grid img.selected {
+    border: 3px solid #00f;
+  }
+  #result {
+    margin-top: 20px;
+  }
+</style>
+</head>
+<body>
+<h2>Verifica di non essere un robot</h2>
+<p>Seleziona tutte le immagini corrette</p>
+<div class="grid" id="captchaGrid">
+<img src="https://picsum.photos/seed/filler17/100" data-true="false" onclick="toggleSelect(this)">
+<img src="https://picsum.photos/seed/filler11/100" data-true="false" onclick="toggleSelect(this)">
+<img src="true_1.jpg" data-true="true" onclick="toggleSelect(this)">
+<img src="https://picsum.photos/seed/filler25/100" data-true="false" onclick="toggleSelect(this)">
+<img src="https://picsum.photos/seed/filler12/100" data-true="false" onclick="toggleSelect(this)">
+<img src="https://picsum.photos/seed/filler7/100" data-true="false" onclick="toggleSelect(this)">
+<img src="https://picsum.photos/seed/filler16/100" data-true="false" onclick="toggleSelect(this)">
+<img src="https://picsum.photos/seed/filler19/100" data-true="false" onclick="toggleSelect(this)">
+<img src="https://picsum.photos/seed/filler18/100" data-true="false" onclick="toggleSelect(this)">
+<img src="https://picsum.photos/seed/filler5/100" data-true="false" onclick="toggleSelect(this)">
+<img src="https://picsum.photos/seed/filler8/100" data-true="false" onclick="toggleSelect(this)">
+<img src="true_8.jpg" data-true="true" onclick="toggleSelect(this)">
+<img src="https://picsum.photos/seed/filler22/100" data-true="false" onclick="toggleSelect(this)">
+<img src="true_4.jpg" data-true="true" onclick="toggleSelect(this)">
+<img src="https://picsum.photos/seed/filler14/100" data-true="false" onclick="toggleSelect(this)">
+<img src="https://picsum.photos/seed/filler3/100" data-true="false" onclick="toggleSelect(this)">
+<img src="true_6.jpg" data-true="true" onclick="toggleSelect(this)">
+<img src="true_7.jpg" data-true="true" onclick="toggleSelect(this)">
+<img src="https://picsum.photos/seed/filler26/100" data-true="false" onclick="toggleSelect(this)">
+<img src="true_5.jpg" data-true="true" onclick="toggleSelect(this)">
+<img src="true_3.jpg" data-true="true" onclick="toggleSelect(this)">
+<img src="true_9.jpg" data-true="true" onclick="toggleSelect(this)">
+<img src="https://picsum.photos/seed/filler1/100" data-true="false" onclick="toggleSelect(this)">
+<img src="https://picsum.photos/seed/filler24/100" data-true="false" onclick="toggleSelect(this)">
+<img src="https://picsum.photos/seed/filler2/100" data-true="false" onclick="toggleSelect(this)">
+<img src="https://picsum.photos/seed/filler20/100" data-true="false" onclick="toggleSelect(this)">
+<img src="https://picsum.photos/seed/filler9/100" data-true="false" onclick="toggleSelect(this)">
+<img src="true_10.jpg" data-true="true" onclick="toggleSelect(this)">
+<img src="https://picsum.photos/seed/filler23/100" data-true="false" onclick="toggleSelect(this)">
+<img src="https://picsum.photos/seed/filler13/100" data-true="false" onclick="toggleSelect(this)">
+<img src="true_2.jpg" data-true="true" onclick="toggleSelect(this)">
+<img src="https://picsum.photos/seed/filler15/100" data-true="false" onclick="toggleSelect(this)">
+<img src="https://picsum.photos/seed/filler10/100" data-true="false" onclick="toggleSelect(this)">
+<img src="https://picsum.photos/seed/filler4/100" data-true="false" onclick="toggleSelect(this)">
+<img src="https://picsum.photos/seed/filler6/100" data-true="false" onclick="toggleSelect(this)">
+<img src="https://picsum.photos/seed/filler21/100" data-true="false" onclick="toggleSelect(this)">
+</div>
+<br>
+<button onclick="validate()">Verifica</button>
+<div id="result"></div>
+
+<script>
+function toggleSelect(img) {
+  img.classList.toggle('selected');
+}
+
+function validate() {
+  const imgs = document.querySelectorAll('.grid img');
+  let correct = 0;
+  let selectedCorrect = 0;
+  let selectedIncorrect = 0;
+
+  imgs.forEach(img => {
+    const isTrue = img.dataset.true === "true";
+    const isSelected = img.classList.contains('selected');
+    if (isTrue) correct++;
+    if (isTrue && isSelected) selectedCorrect++;
+    if (!isTrue && isSelected) selectedIncorrect++;
+  });
+
+  const resultDiv = document.getElementById('result');
+  resultDiv.innerHTML = "";
+  const img = document.createElement('img');
+  img.style.marginTop = "20px";
+  img.style.width = "300px";
+
+  if (selectedCorrect === correct && selectedIncorrect === 0) {
+    img.src = "success.jpg";
+  } else {
+    img.src = "failure.jpg";
+  }
+
+  resultDiv.appendChild(img);
+}
+</script>
+</body>
+</html>
